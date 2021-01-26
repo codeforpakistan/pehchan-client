@@ -1,18 +1,24 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <h1 class="title">Log in with Pehchan</h1>
+    <PehchanLanding/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import PehchanLanding from '@/components/PehchanLanding.vue'; // @ is an alias to /src
 
 @Component({
   components: {
-    HelloWorld,
+    PehchanLanding,
   },
 })
 export default class Home extends Vue {}
 </script>
+
+<style lang="scss" scoped>
+  .home {
+    margin-top: 20vh;
+  }
+</style>
