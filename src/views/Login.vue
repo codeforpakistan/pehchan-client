@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <h1 class="title is-4">Log into Pehchan Account</h1>
+  <div class="login mt2 ml1 mr1">
+    <h1 class="mt3 mb2">Log into Pehchan Account</h1>
     <div class="field">
       <label class="label" for="email">Email</label>
       <div class="control">
@@ -13,8 +13,10 @@
         <input class="input" name="password" type="password" placeholder="Password">
       </div>
     </div>
-    <div class="control">
-      <button v-on:click="doLogin()" class="b-login button is-primary is-fullwidth">Log In</button>
+    <button v-on:click="doLogin()" class="mt2 button is-primary is-fullwidth">Log In</button>
+    <div class="flex flex-center flex-column mt2">
+      <h3 class="mb0 mt1">Don't have a Pehchan Account?</h3>
+      <router-link class="button is-secondary mt2 is-fullwidth" to="/signup/enter-cnic">Sign up</router-link>
     </div>
   </div>
 </template>
@@ -28,7 +30,6 @@ export default class Login extends Vue {
 
   doLogin() {
     console.log('doing login');
-    // do login here. redirect to 2FA after successful login.
     this.redirectTo2FA();
   }
 
@@ -39,15 +40,4 @@ export default class Login extends Vue {
 
 </script>
 
-<style lang="scss" scoped>
-  .login {
-    margin: 2em 1em 0;
-  }
-  h1 {
-    margin-top: 3em;
-    margin-bottom: 2em !important;
-  }
-  .b-login {
-    margin-top: 2em;
-  }
-</style>
+<style lang="scss" scoped></style>

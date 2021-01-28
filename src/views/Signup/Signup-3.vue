@@ -1,45 +1,54 @@
 <template>
-  <div class="login">
-    <h1 class="title is-4">Please enter your contact information</h1>
-    <div class="field">
-      <label class="label" for="email">Email</label>
-      <div class="control">
-        <input class="input" name="email" type="email" placeholder="Email">
-      </div>
-    </div>
+  <div class="login mt2 ml1 mr1">
+    <h1 class="mt3 mb2">Please enter your contact information</h1>
     <div class="field">
       <label class="label" for="phone">Phone Number</label>
       <div class="control">
-        <input class="input" name="phone" type="tel" placeholder="Phone Number">
+        <input class="input" name="phone" type="tel" v-model="phone" v-mask="'+92 (###) ###-####'" placeholder="Phone Number">
       </div>
     </div>
     <div class="control">
-      <router-link class="b-login button is-primary is-fullwidth" to="/signup/confirm-contact">
+      <button class="mt2 button is-primary is-fullwidth" v-on:click="submitContact" :disabled="phone.length < 18">
         Submit
-      </router-link>
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import fetch from 'node-fetch';
 
 @Component
 export default class Login extends Vue {
+  phone = '';
 
+  email = '';
+
+  async submitContact() {
+    console.log('submitting contact info', this.phone);
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({
+        phone: this.phone,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      const response = await fetch('http://localhost:8000/auth/send-verify-code', options);
+      const data = await response.json();
+      console.log('got send verify code response', data);
+      if (data.success) {
+        this.$router.push({ name: 'ConfirmContact', query: { phone: this.phone } });
+      }
+    } catch (err) {
+      console.error('got error in submitting contact info', err);
+    }
+  }
 }
 
 </script>
 
-<style lang="scss" scoped>
-  .login {
-    margin: 2em 1em 0;
-  }
-  h1 {
-    margin-top: 3em;
-    margin-bottom: 2em !important;
-  }
-  .b-login {
-    margin-top: 2em;
-  }
-</style>
+<style lang="scss" scoped></style>

@@ -35,6 +35,11 @@ const routes: Array<RouteConfig> = [
     name: 'ConfirmContact',
     component: () => import('@/views/Signup/Signup-4.vue'),
   },
+  {
+    path: '/signup/success',
+    name: 'SignupSuccess',
+    component: () => import('@/views/Signup/Signup-5.vue'),
+  },
 ];
 
 const router = new VueRouter({

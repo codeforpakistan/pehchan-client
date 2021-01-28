@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <h1 class="title is-4">Please verify your identity</h1>
+  <div class="mt2 ml1 mr1">
+    <h1 class="title is-4 mb2">Please verify your identity</h1>
     <div class="field">
       <label class="label" for="mother-name">Mother's Name</label>
       <div class="select">
@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="control">
-      <router-link class="b-login button is-primary is-fullwidth" to="/signup/enter-contact">
+      <router-link class="mt2 button is-primary is-fullwidth" to="/signup/enter-contact">
         Submit
       </router-link>
     </div>
@@ -29,16 +29,6 @@ export default class Login extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  .login {
-    margin: 2em 1em 0;
-  }
-  h1 {
-    margin-top: 3em;
-    margin-bottom: 2em !important;
-  }
-  .b-login {
-    margin-top: 2em;
-  }
   .select, .select select {
     width: 100%;
   }

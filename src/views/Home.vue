@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <h1 class="title">Log in with Pehchan</h1>
+  <div class="home mt2">
+    <h1 class="p-title mb1">Log in with Pehchan</h1>
     <PehchanLanding/>
   </div>
 </template>
@@ -18,7 +18,4 @@ export default class Home extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-  .home {
-    margin-top: 20vh;
-  }
 </style>
