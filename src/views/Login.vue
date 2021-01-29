@@ -14,7 +14,7 @@
       </div>
     </div>
     <button v-on:click="doLogin()" class="mt2 button is-primary is-fullwidth">Log In</button>
-    <div class="flex flex-center flex-column mt2">
+    <div class="flex flex-center flex-column mt2 mb2">
       <h3 class="mb0 mt1">Don't have a Pehchan Account?</h3>
       <router-link class="button is-secondary mt2 is-fullwidth" to="/signup/enter-cnic">Sign up</router-link>
     </div>

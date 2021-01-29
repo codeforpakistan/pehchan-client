@@ -18,27 +18,32 @@ const routes: Array<RouteConfig> = [
   {
     path: '/signup/enter-cnic',
     name: 'EnterCNIC',
-    component: () => import('@/views/Signup/Signup-1.vue'),
+    component: () => import('@/views/Signup/EnterCNIC.vue'),
   },
   {
     path: '/signup/verify-identity',
     name: 'VerifyIdentity',
-    component: () => import('@/views/Signup/Signup-2.vue'),
+    component: () => import('@/views/Signup/VerifyIdentity.vue'),
   },
   {
     path: '/signup/enter-contact',
     name: 'EnterContact',
-    component: () => import('@/views/Signup/Signup-3.vue'),
+    component: () => import('@/views/Signup/EnterContact.vue'),
   },
   {
     path: '/signup/confirm-contact',
     name: 'ConfirmContact',
-    component: () => import('@/views/Signup/Signup-4.vue'),
+    component: () => import('@/views/Signup/ConfirmContact.vue'),
+  },
+  {
+    path: '/signup/confirm-permissions',
+    name: 'Permissions',
+    component: () => import('@/views/Signup/Permissions.vue'),
   },
   {
     path: '/signup/success',
     name: 'SignupSuccess',
-    component: () => import('@/views/Signup/Signup-5.vue'),
+    component: () => import('@/views/Signup/Success.vue'),
   },
 ];
 

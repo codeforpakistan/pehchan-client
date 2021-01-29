@@ -7,7 +7,7 @@
         <input class="input" name="phone" type="tel" v-model="phone" v-mask="'+92 (###) ###-####'" placeholder="Phone Number">
       </div>
     </div>
-    <div class="control">
+    <div class="control mb2">
       <button class="mt2 button is-primary is-fullwidth" v-on:click="submitContact" :disabled="phone.length < 18">
         Submit
       </button>

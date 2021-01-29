@@ -51,7 +51,7 @@ export default class Login extends Vue {
       const data = await response.json();
       console.log('got verify-number response', data);
       if (data.success) {
-        this.$router.push({ name: 'SignupSuccess' });
+        this.$router.push({ name: 'Permissions' });
       } else {
         alert('Failed to verify number. Please check your number and code.');
       }

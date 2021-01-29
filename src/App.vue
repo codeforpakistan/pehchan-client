@@ -12,7 +12,20 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  max-width: 455px;
+  margin-left: auto;
+  margin-right: auto;
   color: #2c3e50;
+}
+
+@media only screen and (min-width: 455px) {
+  #app {
+    background-color: #fff;
+    padding: .5em;
+    box-shadow:1px 1px 8px -3px rgb(0 0 0 / 50%);
+    border-radius: 0.5em;
+    margin-top: 2em;
+  }
 }
 
 #nav {
@@ -75,6 +88,14 @@ h3 {
   background-color: #005741;
   border-color: transparent;
   color: #fff;
+
+  &:hover {
+    background-color: #008866;
+  }
+
+  &:disabled {
+    background-color: #4ec9aa;
+  }
 }
 
 .button.is-secondary {

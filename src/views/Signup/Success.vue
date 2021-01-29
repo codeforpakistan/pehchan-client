@@ -1,5 +1,5 @@
 <template>
-  <div class="mt2 ml1 mr1">
+  <div class="mt2 ml1 mr1 mb2">
     <h1>Successfully created account</h1>
     <h4>You can close this tab and go back to the app now.</h4>
   </div>

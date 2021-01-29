@@ -8,7 +8,7 @@
     <div class="flex flex-center mt2">
       <router-link class="button is-secondary" to="/login">Add another account</router-link>
     </div>
-    <div class="flex flex-center flex-column mt2">
+    <div class="flex flex-center flex-column mt2 mb2">
       <h3 class="title is-5">Don't have a Pehchan Account?</h3>
       <router-link class="button is-primary mt2 is-fullwidth" to="/signup/enter-cnic">Sign up</router-link>
     </div>
