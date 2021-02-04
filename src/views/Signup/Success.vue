@@ -22,6 +22,7 @@ export default class Login extends Vue {
   mounted() {
     this.appName = (localStorage.getItem('appName') as string);
     this.redirectUrl = (localStorage.getItem('redirectUrl') as string);
+    this.redirectUrl = this.redirectUrl.replace('https:', '');
   }
 }
 
