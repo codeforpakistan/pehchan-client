@@ -37,9 +37,9 @@ export default class Login extends Vue {
       },
     };
     try {
-      let url = 'https://pehchan-verify-service.herokuapp.com';
-      // let url = 'http://localhost:8000';
-      const response = await fetch(url + '/auth/send-verify-code', options);
+      const url = 'https://pehchan-verify-service.herokuapp.com';
+      // const url = 'http://localhost:8000';
+      const response = await fetch(`${url}/auth/send-verify-code`, options);
       const data = await response.json();
       console.log('got send verify code response', data);
       if (data.success) {
