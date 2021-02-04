@@ -14,7 +14,13 @@ import PehchanLanding from '@/components/PehchanLanding.vue'; // @ is an alias t
     PehchanLanding,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  mounted() {
+    console.log('got route', this.$route.query.redirectUrl);
+    localStorage.setItem('redirectUrl', (this.$route.query.redirectUrl as string));
+    localStorage.setItem('appName', (this.$route.query.appName as string));
+  }
+}
 </script>
 
 <style lang="scss" scoped>
