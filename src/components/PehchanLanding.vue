@@ -6,7 +6,7 @@
       <div class="ml1 mrauto account-name">{{name}}</div>
     </div>
     <div class="flex flex-center mt2">
-      <router-link class="button is-secondary" to="/login">Add another account</router-link>
+      <a class="button is-secondary" :href="oauthUrl">Add another account</a>
     </div>
     <div class="flex flex-center flex-column mt2 mb2">
       <h3 class="title is-5">Don't have a Pehchan Account?</h3>
@@ -21,6 +21,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class PehchanLanding extends Vue {
   @Prop() private msg!: string;
+
+  oauthUrl = `${process.env.VUE_APP_OAUTH_URL}/oauth2/code`
 
   referrerApp = 'Super App';
 }

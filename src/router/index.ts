@@ -36,7 +36,7 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/views/Signup/ConfirmContact.vue'),
   },
   {
-    path: '/signup/confirm-permissions',
+    path: '/confirm-permissions',
     name: 'Permissions',
     component: () => import('@/views/Signup/Permissions.vue'),
   },
