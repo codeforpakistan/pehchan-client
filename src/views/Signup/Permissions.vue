@@ -34,7 +34,7 @@ export default class Login extends Vue {
     }
   }
 
-  consent() {
+  async consent() {
     const options = {
       method: 'POST',
       body: JSON.stringify({
