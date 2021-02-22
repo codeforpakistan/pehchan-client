@@ -7,9 +7,9 @@
       <li>Email address</li>
       <li>CNIC</li>
     </ul>
-    <router-link class="mt2 button is-primary is-fullwidth" v-on:click="consent()">
+    <button class="mt2 button is-primary is-fullwidth" v-on:click="consent()">
       Continue
-    </router-link>
+    </button>
     <button class="mt2 button is-secondary is-fullwidth" v-on:click="closeWindow()">
       Cancel
     </button>
