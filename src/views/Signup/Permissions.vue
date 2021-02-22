@@ -7,7 +7,7 @@
       <li>Email address</li>
       <li>CNIC</li>
     </ul>
-    <router-link class="mt2 button is-primary is-fullwidth" to="/signup/success">
+    <router-link class="mt2 button is-primary is-fullwidth" v-on:click="consent()">
       Continue
     </router-link>
     <button class="mt2 button is-secondary is-fullwidth" v-on:click="closeWindow()">
@@ -20,10 +20,40 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import fetch from 'node-fetch';
 
 @Component
 export default class Login extends Vue {
-  mounted() {}
+  challenge = '';
+
+  mounted() {
+    this.challenge = (this.$route.query.consent_challenge as string);
+    console.log('got challenge', this.challenge);
+    if (!this.challenge) {
+      this.$router.push({ name: 'Home' });
+    }
+  }
+
+  consent() {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({
+        requested_scope: ['openid', 'offline', 'photos.read'],
+        remember: false,
+        consent_challenge: this.challenge,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    console.log('sending data', options);
+    const response = await fetch(`${process.env.VUE_APP_PEHCHAN_API_URL}/consentt`, options);
+    const data = await response.json();
+    console.log('got consent response', data);
+    if (data.redirect_to) {
+      window.location = data.redirect_to;
+    }
+  }
 }
 
 </script>
