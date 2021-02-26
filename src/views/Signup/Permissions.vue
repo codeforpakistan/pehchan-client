@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 @Component
 export default class Login extends Vue {
@@ -35,23 +35,18 @@ export default class Login extends Vue {
   }
 
   async consent() {
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({
-        requested_scope: ['openid', 'offline', 'photos.read'],
-        remember: false,
-        consent_challenge: this.challenge,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const user = JSON.parse(localStorage.getItem('user') as string);
+    const body = {
+      requested_scope: ['openid', 'offline', 'photos.read'],
+      remember: false,
+      consent_challenge: this.challenge,
+      nic: user.nic.replace(/-/g, ''),
     };
-    console.log('sending data', options);
-    const response = await fetch(`${process.env.VUE_APP_PEHCHAN_API_URL}/consentt`, options);
-    const data = await response.json();
-    console.log('got consent response', data);
-    if (data.redirect_to) {
-      window.location = data.redirect_to;
+    console.log('sending data', body);
+    const response = await axios.post(`${process.env.VUE_APP_PEHCHAN_API_URL}/consentt`, body);
+    console.log('got consent response', response);
+    if (response.data?.redirect_to) {
+      window.location = response.data.redirect_to;
     }
   }
 }

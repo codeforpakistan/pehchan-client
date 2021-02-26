@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 @Component
 export default class Login extends Vue {
@@ -27,21 +27,14 @@ export default class Login extends Vue {
 
   async submitContact() {
     console.log('submitting contact info', this.phone);
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({
-        phone: this.phone,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
     try {
-      const response = await fetch(`${process.env.VUE_APP_API_URL}/auth/send-verify-code`, options);
-      const data = await response.json();
-      console.log('got send verify code response', data);
-      if (data.success) {
-        this.$router.push({ name: 'ConfirmContact', query: { phone: this.phone } });
+      const response = await axios.post(`${process.env.VUE_APP_API_URL}/auth/send-verify-code`, { phone: this.phone });
+      console.log('got send verify code response', response);
+      if (response.data?.success) {
+        const user = JSON.parse(localStorage.getItem('user') as string);
+        user.phone = this.phone;
+        localStorage.setItem('user', JSON.stringify(user));
+        this.$router.push({ name: 'ConfirmContact', query: { phone: this.phone, login_challenge: this.$route.query.login_challenge } });
       }
     } catch (err) {
       console.error('got error in submitting contact info', err);

@@ -16,14 +16,14 @@
   <button v-on:click="doLogin()" class="mt2 button is-primary is-fullwidth">Log In</button>
   <div class="flex flex-center flex-column mt2 mb2">
     <h3 class="mb0 mt1">Don't have a Pehchan Account?</h3>
-    <router-link class="button is-secondary mt2 is-fullwidth" to="/signup/enter-cnic">Sign up</router-link>
+    <router-link class="button is-secondary mt2 is-fullwidth" :to="signupUrl">Sign up</router-link>
   </div>
 </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 @Component
 export default class Login extends Vue {
@@ -32,6 +32,8 @@ export default class Login extends Vue {
   password = '';
 
   challenge = '';
+
+  signupUrl = `/signup/enter-cnic/?login_challenge=${this.$route.query.login_challenge}`;
 
   mounted() {
     this.challenge = (this.$route.query.login_challenge as string);
@@ -43,32 +45,16 @@ export default class Login extends Vue {
 
   async doLogin() {
     console.log('doing login');
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({
-        nic: this.nic,
-        password: this.password,
-        login_challenge: this.challenge,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const body = {
+      nic: this.nic,
+      password: this.password,
+      login_challenge: this.challenge,
     };
-    console.log('sending data', options);
-    const response = await fetch(`${process.env.VUE_APP_PEHCHAN_API_URL}/loginn`, options);
-    const data = await response.json();
-    console.log('got login response', data);
-    if (data.redirect_to) {
-      window.location = data.redirect_to;
+    const response = await axios.post(`${process.env.VUE_APP_PEHCHAN_API_URL}/loginn`, body);
+    console.log('got login response', response);
+    if (response.data?.redirect_to) {
+      window.location = response.data.redirect_to;
     }
-    if (data.success) {
-      // this.$router.push({ name: 'ConfirmContact', query: { phone: this.phone } });
-    }
-    this.redirectTo2FA();
-  }
-
-  redirectTo2FA() {
-    console.log('running 2FA');
   }
 }
 </script>
