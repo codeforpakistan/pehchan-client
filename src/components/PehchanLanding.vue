@@ -19,13 +19,11 @@ import emitter from '../emitter';
 export default class PehchanLanding extends Vue {
   @Prop() private msg!: string;
 
-  oauthUrl = `${process.env.VUE_APP_OAUTH_URL}/oauth2/code`
-
   referrerApp = 'Super App';
 
   addAccount() {
     emitter.emit('loading', true);
-    window.location = this.oauthUrl;
+    window.location = `${process.env.VUE_APP_OAUTH_URL}/oauth2/code`;
   }
 }
 </script>
