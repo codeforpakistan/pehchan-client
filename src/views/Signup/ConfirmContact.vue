@@ -30,6 +30,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import axios from 'axios';
+import emitter from '../../emitter';
 
 @Component
 export default class Login extends Vue {
@@ -62,6 +63,7 @@ export default class Login extends Vue {
         const createUserResponse = await axios.post(`${process.env.VUE_APP_PEHCHAN_API_URL}/users`, body);
         console.log('got crete user response', createUserResponse);
         if (createUserResponse.data?.redirect_to) {
+          emitter.emit('loading', true);
           window.location = createUserResponse.data.redirect_to;
         }
       } else {

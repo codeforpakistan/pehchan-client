@@ -17,7 +17,8 @@ module.exports = {
     'class-methods-use-this': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     'max-len': 'off',
-    '@typescript-eslint/camelcase': 'off'
+    '@typescript-eslint/camelcase': 'off',
+    'arrow-body-style': 'off'
   },
   overrides: [
     {

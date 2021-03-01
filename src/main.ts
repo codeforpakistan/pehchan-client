@@ -4,6 +4,8 @@ import 'buefy/dist/buefy.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import axios from 'axios';
+import emitter from './emitter';
 import App from './App.vue';
 import router from './router';
 
@@ -14,6 +16,22 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 
 Vue.use(VueTheMask);
+
+let requests = 0;
+
+axios.interceptors.request.use((request) => {
+  emitter.emit('loading', true);
+  requests += 1;
+  return request;
+});
+
+axios.interceptors.response.use((response) => {
+  requests -= 1;
+  if (!requests) {
+    emitter.emit('loading', false);
+  }
+  return response;
+});
 
 new Vue({
   router,

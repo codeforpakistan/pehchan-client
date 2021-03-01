@@ -1,8 +1,29 @@
 <template>
   <div id="app">
+    <div v-if="loading" class="loading-container">
+      <div class="">
+        <div class="lds-dual-ring"></div>
+      </div>
+    </div>
     <router-view/>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import emitter from './emitter';
+
+@Component
+export default class Home extends Vue {
+  loading = false;
+
+  mounted() {
+    emitter.on('loading', (data) => {
+      this.loading = data;
+    });
+  }
+}
+</script>
 
 <style lang="scss">
 @import url('https://cdn.jsdelivr.net/gh/NaurozAhmad/CSSMarginPaddingClasses/margin-padding-classes.css');
@@ -16,6 +37,45 @@
   margin-left: auto;
   margin-right: auto;
   color: #2c3e50;
+}
+
+.loading-container {
+  background-color: rgba(0,0,0,0.4);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media only screen and (min-width: 455px) {

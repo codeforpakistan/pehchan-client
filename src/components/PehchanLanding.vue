@@ -6,13 +6,14 @@
       <div class="ml1 mrauto account-name">{{name}}</div>
     </div>
     <div class="flex flex-center mt2 mb2">
-      <a class="button is-secondary" :href="oauthUrl">Add another account</a>
+      <a class="button is-secondary" @click="addAccount()">Add another account</a>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import emitter from '../emitter';
 
 @Component
 export default class PehchanLanding extends Vue {
@@ -21,6 +22,11 @@ export default class PehchanLanding extends Vue {
   oauthUrl = `${process.env.VUE_APP_OAUTH_URL}/oauth2/code`
 
   referrerApp = 'Super App';
+
+  addAccount() {
+    emitter.emit('loading', true);
+    window.location = this.oauthUrl;
+  }
 }
 </script>
 
