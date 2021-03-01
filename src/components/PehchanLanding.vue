@@ -23,7 +23,7 @@ export default class PehchanLanding extends Vue {
 
   addAccount() {
     emitter.emit('loading', true);
-    window.location = `${process.env.VUE_APP_OAUTH_URL}/oauth2/code`;
+    window.location.href = `${process.env.VUE_APP_OAUTH_URL}/oauth2/code`;
   }
 }
 </script>
