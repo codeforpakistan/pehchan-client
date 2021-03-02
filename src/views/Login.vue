@@ -51,6 +51,7 @@ export default class Login extends Vue {
       password: this.password,
       login_challenge: this.challenge,
     };
+    localStorage.setItem('user', JSON.stringify({ nic: this.nic }));
     const response = await axios.post(`${process.env.VUE_APP_PEHCHAN_API_URL}/loginn`, body);
     console.log('got login response', response);
     if (response.data?.redirect_to) {
