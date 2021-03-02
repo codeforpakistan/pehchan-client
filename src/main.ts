@@ -31,6 +31,12 @@ axios.interceptors.response.use((response) => {
     emitter.emit('loading', false);
   }
   return response;
+}, (err) => {
+  requests -= 1;
+  if (!requests) {
+    emitter.emit('loading', false);
+  }
+  return err;
 });
 
 new Vue({
