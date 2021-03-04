@@ -7,6 +7,10 @@
       <li>Email address</li>
       <li>CNIC</li>
     </ul>
+    <div class="rememberThis mt1">
+      <label for="remember">Remember this</label>
+      <input type="checkbox" id="remember" value="false" v-model="remember">
+    </div>
     <button class="mt2 button is-primary is-fullwidth" v-on:click="consent()">
       Continue
     </button>
@@ -16,8 +20,20 @@
   </div>
 </template>
 
-<style lang="scss" scoped></style>
-
+<style lang="scss" scoped>
+div.rememberThis {
+  text-align: left;
+  margin-left: 1em;
+  label {
+    margin-right: 10px;
+    font-weight: 500;
+  }
+  input {
+    width: 15px;
+    height: 15px;
+  }
+}
+</style>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import axios from 'axios';
@@ -26,6 +42,8 @@ import emitter from '../../emitter';
 @Component
 export default class Login extends Vue {
   challenge = '';
+
+  remember = false;
 
   mounted() {
     this.challenge = (this.$route.query.consent_challenge as string);
@@ -39,7 +57,7 @@ export default class Login extends Vue {
     const user = JSON.parse(localStorage.getItem('user') as string);
     const body = {
       requested_scope: ['openid', 'offline', 'photos.read'],
-      remember: false,
+      remember: this.remember,
       consent_challenge: this.challenge,
       nic: user.nic.replace(/-/g, ''),
     };
@@ -50,6 +68,11 @@ export default class Login extends Vue {
       emitter.emit('loading', true);
       window.location = response.data.redirect_to;
     }
+  }
+
+  closeWindow() {
+    const closeURL: any = `${process.env.VUE_APP_OAUTH_URL}/cancel-auth`;
+    window.location = closeURL;
   }
 }
 
