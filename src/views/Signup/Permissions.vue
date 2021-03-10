@@ -1,5 +1,5 @@
 <template>
-  <div class="mt2 ml1 mr1 mb1">
+  <div class="mt2 ml1 mr1 mb1" v-if="showContent">
     <h1>Super App</h1>
     <h4>Super App will receive the following permissions</h4>
     <ul style="text-align: left; margin-left: 2em; list-style-type: circle; margin-top: 1em;">
@@ -45,11 +45,32 @@ export default class Login extends Vue {
 
   remember = false;
 
-  mounted() {
+  showContent = false;
+
+  async mounted() {
+    emitter.emit('loading', true);
     this.challenge = (this.$route.query.consent_challenge as string);
     console.log('got challenge', this.challenge);
+    // skip this if already has provided permissions
+    await this.hasRememeberMe();
+    this.showContent = true;
+    emitter.emit('loading', false);
     if (!this.challenge) {
       this.$router.push({ name: 'Home' });
+    }
+  }
+
+  async hasRememeberMe() {
+    const user = JSON.parse(localStorage.getItem('user') as string);
+    const body = {
+      consent_challenge: this.challenge,
+      nic: user.nic.replace(/-/g, ''),
+    };
+    console.log('sending data', body);
+    const response = await axios.post(`${process.env.VUE_APP_PEHCHAN_API_URL}/consent_skip`, body);
+    console.log('got consent skip response', response);
+    if (response.data?.skip) {
+      window.location = response.data.redirect_to;
     }
   }
 

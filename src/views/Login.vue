@@ -13,6 +13,9 @@
       <input class="input" name="password" type="password" v-model="password" placeholder="Password">
     </div>
   </div>
+  <div v-if="error" class="field">
+    <label style="color: red;">{{error}}</label>
+  </div>
   <button v-on:click="doLogin()" class="mt2 button is-primary is-fullwidth">Log In</button>
   <div class="flex flex-center flex-column mt2 mb2">
     <h3 class="mb0 mt1">Don't have a Pehchan Account?</h3>
@@ -30,6 +33,8 @@ import emitter from '../emitter';
 export default class Login extends Vue {
   nic = '';
 
+  error = '';
+
   password = '';
 
   challenge = '';
@@ -45,18 +50,24 @@ export default class Login extends Vue {
   }
 
   async doLogin() {
-    console.log('doing login');
-    const body = {
-      nic: this.nic,
-      password: this.password,
-      login_challenge: this.challenge,
-    };
-    localStorage.setItem('user', JSON.stringify({ nic: this.nic }));
-    const response = await axios.post(`${process.env.VUE_APP_PEHCHAN_API_URL}/loginn`, body);
-    console.log('got login response', response);
-    if (response.data?.redirect_to) {
-      emitter.emit('loading', true);
-      window.location = response.data.redirect_to;
+    this.error = '';
+    try {
+      console.log('doing login');
+      const body = {
+        nic: this.nic,
+        password: this.password,
+        login_challenge: this.challenge,
+      };
+      localStorage.setItem('user', JSON.stringify({ nic: this.nic }));
+      const response: any = await axios.post(`${process.env.VUE_APP_PEHCHAN_API_URL}/loginn`, body);
+      if (response.data?.redirect_to) {
+        emitter.emit('loading', true);
+        window.location = response.data.redirect_to;
+      } else {
+        this.error = 'Incorrect NIC or password';
+      }
+    } catch (err) {
+      console.log('got login error', err);
     }
   }
 }
