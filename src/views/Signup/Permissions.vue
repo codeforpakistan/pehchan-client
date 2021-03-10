@@ -1,22 +1,27 @@
 <template>
   <div class="mt2 ml1 mr1 mb1">
-    <h1>Super App</h1>
-    <h4>Super App will receive the following permissions</h4>
-    <ul style="text-align: left; margin-left: 2em; list-style-type: circle; margin-top: 1em;">
-      <li>Your name</li>
-      <li>Email address</li>
-      <li>CNIC</li>
-    </ul>
-    <div class="rememberThis mt1">
-      <label for="remember">Remember this</label>
-      <input type="checkbox" id="remember" value="false" v-model="remember">
+    <div v-if="renderUI">
+      <h1>Super App</h1>
+      <h4>Super App will receive the following permissions</h4>
+      <ul style="text-align: left; margin-left: 2em; list-style-type: circle; margin-top: 1em;">
+        <li>Your name</li>
+        <li>Email address</li>
+        <li>CNIC</li>
+      </ul>
+      <div class="rememberThis mt1">
+        <label for="remember">Remember this</label>
+        <input type="checkbox" id="remember" value="false" v-model="remember">
+      </div>
+      <button class="mt2 button is-primary is-fullwidth" v-on:click="consent()">
+        Continue
+      </button>
+      <button class="mt2 button is-secondary is-fullwidth" v-on:click="closeWindow()">
+        Cancel
+      </button>
     </div>
-    <button class="mt2 button is-primary is-fullwidth" v-on:click="consent()">
-      Continue
-    </button>
-    <button class="mt2 button is-secondary is-fullwidth" v-on:click="closeWindow()">
-      Cancel
-    </button>
+    <div v-if="!renderUI">
+      <label>Please wait..</label>
+    </div>
   </div>
 </template>
 
@@ -45,25 +50,38 @@ export default class Login extends Vue {
 
   remember = false;
 
-  async beforeMount() {
-    emitter.emit('loading', true);
-    // skip this if already has provided permissions
-    await this.hasRememeberMe();
-    emitter.emit('loading', false);
+  renderUI = false;
+
+  async created() {
+    try {
+      emitter.emit('loading', true);
+      const consentChallenge = window.location.href.split('consent_challenge=');
+      if (consentChallenge.length > 1) {
+        console.log('url', consentChallenge[1]);
+        await this.hasRememeberMe(consentChallenge[1]);
+      }
+    } catch (err) {
+      console.log(err);
+      emitter.emit('loading', false);
+    }
   }
 
   async mounted() {
+    setTimeout(() => {
+      this.renderUI = true;
+    }, 2000);
     this.challenge = (this.$route.query.consent_challenge as string);
     console.log('got challenge', this.challenge);
     if (!this.challenge) {
       this.$router.push({ name: 'Home' });
     }
+    emitter.emit('loading', false);
   }
 
-  async hasRememeberMe() {
+  async hasRememeberMe(challenge: string) {
     const user = JSON.parse(localStorage.getItem('user') as string);
     const body = {
-      consent_challenge: this.challenge,
+      consent_challenge: challenge,
       nic: user.nic.replace(/-/g, ''),
     };
     console.log('sending data', body);
