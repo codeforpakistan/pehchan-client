@@ -69,7 +69,7 @@ export default class Login extends Vue {
   async mounted() {
     setTimeout(() => {
       this.renderUI = true;
-    }, 2000);
+    }, 3500);
     this.challenge = (this.$route.query.consent_challenge as string);
     console.log('got challenge', this.challenge);
     if (!this.challenge) {
