@@ -1,5 +1,5 @@
 <template>
-  <div class="mt2 ml1 mr1 mb1" v-if="showContent">
+  <div class="mt2 ml1 mr1 mb1">
     <h1>Super App</h1>
     <h4>Super App will receive the following permissions</h4>
     <ul style="text-align: left; margin-left: 2em; list-style-type: circle; margin-top: 1em;">
@@ -45,16 +45,16 @@ export default class Login extends Vue {
 
   remember = false;
 
-  showContent = false;
-
-  async mounted() {
+  async beforeMount() {
     emitter.emit('loading', true);
-    this.challenge = (this.$route.query.consent_challenge as string);
-    console.log('got challenge', this.challenge);
     // skip this if already has provided permissions
     await this.hasRememeberMe();
-    this.showContent = true;
     emitter.emit('loading', false);
+  }
+
+  async mounted() {
+    this.challenge = (this.$route.query.consent_challenge as string);
+    console.log('got challenge', this.challenge);
     if (!this.challenge) {
       this.$router.push({ name: 'Home' });
     }
