@@ -66,7 +66,7 @@ export default class Login extends Vue {
     this.type = this.type === 'password' ? 'text' : 'password';
   }
 
-  async doLogin(e) {
+  async doLogin(e: any) {
     e.preventDefault();
     this.error = '';
     try {
