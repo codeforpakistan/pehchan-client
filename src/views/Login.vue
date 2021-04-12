@@ -1,25 +1,36 @@
 <template>
-<div class="login mt2 ml1 mr1">
-  <h1 class="mt3 mb2">Log into Pehchan Account</h1>
+<div class="login mt1 ml1 mr1">
+  <h1 class="mt2 mb1">PEHCHAAN</h1>
+  <p class="mb1 is-primary">A digital identity linked with NADRA</p>
+  <p class="mb1 mt2">Login with your pehchaan account to continue to KP Super App</p>
+  <form v-on:submit="doLogin()">
   <div class="field">
-    <label class="label" for="nic">NIC</label>
+    <label class="label" for="nic">CNIC <span class="light-text">(without dashes)</span> <span class="required-asterisk">*</span></label>
     <div class="control">
-      <input class="input" name="nic" type="tel" v-model="nic" v-mask="'#####-#######-#'" placeholder="NIC">
+      <input class="input" required name="nic" type="tel" v-model="nic" v-mask="'#####-#######-#'" placeholder="NIC">
     </div>
   </div>
   <div class="field">
-    <label class="label" for="password">Password</label>
-    <div class="control">
-      <input class="input" name="password" type="password" v-model="password" placeholder="Password">
+    <label class="label" for="password">Password <span class="required-asterisk">*</span></label>
+    <div class="control password-input">
+      <input class="input" required name="password" :type="type" v-model="password" placeholder="Password">
+      <span @click="showPassword">
+        <font-awesome-icon v-if="type==='password'" :icon="['fas', 'eye']" />
+        <font-awesome-icon v-if="type==='text'" :icon="['fas', 'eye-slash']" />
+      </span>
     </div>
+  </div>
+  <div class="field" style="text-align: left;">
+    <a class="forgot-pass">Forgot Password?</a>
   </div>
   <div v-if="error" class="field">
     <label style="color: red;">{{error}}</label>
   </div>
-  <button v-on:click="doLogin()" class="mt2 button is-primary is-fullwidth">Log In</button>
+  <button type="submit" class="mt2 button is-primary is-fullwidth">Log In</button>
+  </form>
   <div class="flex flex-center flex-column mt2 mb2">
-    <h3 class="mb0 mt1">Don't have a Pehchan Account?</h3>
-    <router-link class="button is-secondary mt2 is-fullwidth" :to="signupUrl">Sign up</router-link>
+    <h5 class="mb0 mt1 no-account">Don't have an Account?</h5>
+    <router-link class="button is-secondary mt0 is-fullwidth" :to="signupUrl">Sign up</router-link>
   </div>
 </div>
 </template>
@@ -41,12 +52,18 @@ export default class Login extends Vue {
 
   signupUrl = `/signup/enter-cnic/?login_challenge=${this.$route.query.login_challenge}`;
 
+  type = 'password';
+
   mounted() {
     this.challenge = (this.$route.query.login_challenge as string);
     console.log('got challenge', this.challenge);
     if (!this.challenge) {
       this.$router.push({ name: 'Home' });
     }
+  }
+
+  showPassword() {
+    this.type = this.type === 'password' ? 'text' : 'password';
   }
 
   async doLogin() {
@@ -73,4 +90,43 @@ export default class Login extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.login {
+  h1 {
+    color: #005741;
+    font-weight: 900;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  p.is-primary {
+    color: #005741;
+    font-weight: 500;
+  }
+  p {
+    color: black;
+    font-weight: 450;
+    font-size: 1.1rem;
+  }
+  a.forgot-pass {
+    text-align: left;
+    text-decoration: underline;
+    color: #005741
+  }
+}
+.no-account {
+  color: black;
+  font-weight: 450;
+  font-size: 1.1rem;
+}
+.password-input {
+  position: relative;
+}
+.password-input span {
+  position: absolute;
+  top: 6px;
+  font-size: 1.3rem;
+  right: 10px;
+  color: rgb(161, 161, 161);
+  cursor: pointer;
+}
+</style>

@@ -161,4 +161,15 @@ h3 {
 .button.is-secondary {
   background-color: #EEEEEE;
 }
+span.light-text {
+  font-weight: 500;
+  color: grey;
+}
+.required-asterisk {
+  color: red;
+}
+.input:focus {
+  border:1px solid #008866;
+  box-shadow: 0 1px 5px #008866;
+}
 </style>

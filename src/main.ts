@@ -2,14 +2,15 @@ import Vue from 'vue';
 import VueTheMask from 'vue-the-mask';
 import 'buefy/dist/buefy.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import emitter from './emitter';
 import App from './App.vue';
 import router from './router';
 
-library.add(faPlusSquare);
+library.add(faEye);
+library.add(faEyeSlash);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
