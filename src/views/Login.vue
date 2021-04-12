@@ -3,30 +3,30 @@
   <h1 class="mt2 mb1">PEHCHAAN</h1>
   <p class="mb1 is-primary">A digital identity linked with NADRA</p>
   <p class="mb1 mt2">Login with your pehchaan account to continue to KP Super App</p>
-  <form v-on:submit="doLogin()">
-  <div class="field">
-    <label class="label" for="nic">CNIC <span class="light-text">(without dashes)</span> <span class="required-asterisk">*</span></label>
-    <div class="control">
-      <input class="input" required name="nic" type="tel" v-model="nic" v-mask="'#####-#######-#'" placeholder="NIC">
+  <form v-on:submit="doLogin">
+    <div class="field">
+      <label class="label" for="nic">CNIC <span class="light-text">(without dashes)</span> <span class="required-asterisk">*</span></label>
+      <div class="control">
+        <input class="input" required name="nic" type="tel" v-model="nic" v-mask="'#####-#######-#'" placeholder="NIC">
+      </div>
     </div>
-  </div>
-  <div class="field">
-    <label class="label" for="password">Password <span class="required-asterisk">*</span></label>
-    <div class="control password-input">
-      <input class="input" required name="password" :type="type" v-model="password" placeholder="Password">
-      <span @click="showPassword">
-        <font-awesome-icon v-if="type==='password'" :icon="['fas', 'eye']" />
-        <font-awesome-icon v-if="type==='text'" :icon="['fas', 'eye-slash']" />
-      </span>
+    <div class="field">
+      <label class="label" for="password">Password <span class="required-asterisk">*</span></label>
+      <div class="control password-input">
+        <input class="input" required name="password" :type="type" v-model="password" placeholder="Password">
+        <span @click="showPassword">
+          <font-awesome-icon v-if="type==='password'" :icon="['fas', 'eye']" />
+          <font-awesome-icon v-if="type==='text'" :icon="['fas', 'eye-slash']" />
+        </span>
+      </div>
     </div>
-  </div>
-  <div class="field" style="text-align: left;">
-    <a class="forgot-pass">Forgot Password?</a>
-  </div>
-  <div v-if="error" class="field">
-    <label style="color: red;">{{error}}</label>
-  </div>
-  <button type="submit" class="mt2 button is-primary is-fullwidth">Log In</button>
+    <div class="field" style="text-align: left;">
+      <a class="forgot-pass">Forgot Password?</a>
+    </div>
+    <div v-if="error" class="field">
+      <label style="color: red;">{{error}}</label>
+    </div>
+    <button type="submit" class="mt2 button is-primary is-fullwidth">Log In</button>
   </form>
   <div class="flex flex-center flex-column mt2 mb2">
     <h5 class="mb0 mt1 no-account">Don't have an Account?</h5>
@@ -66,7 +66,8 @@ export default class Login extends Vue {
     this.type = this.type === 'password' ? 'text' : 'password';
   }
 
-  async doLogin() {
+  async doLogin(e) {
+    e.preventDefault();
     this.error = '';
     try {
       console.log('doing login');
