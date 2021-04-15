@@ -1,6 +1,10 @@
 <template>
   <div class="mt2 ml1 mr1">
-    <h1 class="mb2">Please confirm your phone.</h1>
+    <div class="form-header">
+      <h1 class="mt0 mb1">PEHCHAAN</h1>
+      <p class="is-primary">A digital identity linked with NADRA</p>
+    </div>
+    <h1 class="mb1 mt2">Please confirm your phone.</h1>
     <p class="mb2">A verification code has been sent to your phone number. Enter it below to verify your contact information.</p>
     <div class="field">
       <label class="label" for="phone-code">Enter Code (Sent to {{phone}})</label>
@@ -12,7 +16,7 @@
       <label class="label text-link has-text-centered" for="phone-code">Did not receive the code? <span class="link">Resend</span></label>
     </div>
     <div class="field">
-      <label class="label mt2" for="password">New Password</label>
+      <label class="label mt1" for="password">New Password</label>
       <div class="control password-input">
         <input class="input" required name="password" :type="type" v-model="password" placeholder="Password">
         <span @click="showPassword">
@@ -25,7 +29,7 @@
       <button v-on:click="doSignup()" class="mt2 button is-primary is-fullwidth" :disabled="code == null || code.length < 6">
         Submit
       </button>
-      <router-link class="mt2 button is-secondary is-fullwidth" to="/signup/enter-contact">
+      <router-link class="mt2 mb1 button is-secondary is-fullwidth" to="/signup/enter-contact">
         Change Number or Email
       </router-link>
     </div>
