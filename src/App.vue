@@ -69,6 +69,22 @@ export default class Home extends Vue {
   animation: lds-dual-ring 1.2s linear infinite;
 }
 
+.b-checkbox.checkbox input[type=checkbox]:checked + .check.is-primary {
+  // background: #005741;
+  // border-color: #005741;
+  background: #005741 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cpath style='fill:%23fff' d='M 0.04038059,0.6267767 0.14644661,0.52071068 0.42928932,0.80355339 0.3232233,0.90961941 z M 0.21715729,0.80355339 0.85355339,0.16715729 0.95961941,0.2732233 0.3232233,0.90961941 z'%3E%3C/path%3E%3C/svg%3E") no-repeat center center;
+  border-color: #005741;
+}
+
+.b-checkbox.checkbox input[type=checkbox]:focus:checked + .check.is-primary {
+  -webkit-box-shadow: 0 0 0.5em rgb(0 87 65 / 80%);
+  box-shadow: 0 0 0.5em rgb(0 87 65 / 80%);
+}
+
+.b-checkbox.checkbox:hover input[type=checkbox]:not(:disabled) + .check.is-primary {
+  border-color: #005741;
+}
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
@@ -90,7 +106,6 @@ export default class Home extends Vue {
 
 #nav {
   padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -158,6 +173,18 @@ h3 {
   }
 }
 
+.password-input {
+  position: relative;
+}
+.password-input span {
+  position: absolute;
+  top: 6px;
+  font-size: 1.3rem;
+  right: 10px;
+  color: rgb(161, 161, 161);
+  cursor: pointer;
+}
+
 .button.is-secondary {
   background-color: #EEEEEE;
 }
@@ -171,5 +198,34 @@ span.light-text {
 .input:focus {
   border:1px solid #008866;
   box-shadow: 0 1px 5px #008866;
+}
+.form-header {
+  h1 {
+    color: #005741;
+    font-weight: 900;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  p.is-primary {
+    color: #005741;
+    font-weight: 500;
+  }
+  p {
+    color: black;
+    font-weight: 450;
+    font-size: 1.1rem;
+  }
+  a.forgot-pass {
+    text-align: left;
+    text-decoration: underline;
+    color: #005741
+  }
+}
+.text-link {
+  span.link {
+    color: #005741;
+    cursor: pointer;
+    font-weight: 500;
+  }
 }
 </style>

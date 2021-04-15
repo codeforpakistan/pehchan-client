@@ -1,5 +1,5 @@
 <template>
-<div class="login mt1 ml1 mr1">
+<div class="form-header mt1 ml1 mr1">
   <h1 class="mt2 mb1">PEHCHAAN</h1>
   <p class="mb1 is-primary">A digital identity linked with NADRA</p>
   <p class="mb1 mt2">Login with your pehchaan account to continue to KP Super App</p>
@@ -92,42 +92,9 @@ export default class Login extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.login {
-  h1 {
-    color: #005741;
-    font-weight: 900;
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-  }
-  p.is-primary {
-    color: #005741;
-    font-weight: 500;
-  }
-  p {
-    color: black;
-    font-weight: 450;
-    font-size: 1.1rem;
-  }
-  a.forgot-pass {
-    text-align: left;
-    text-decoration: underline;
-    color: #005741
-  }
-}
 .no-account {
   color: black;
   font-weight: 450;
   font-size: 1.1rem;
-}
-.password-input {
-  position: relative;
-}
-.password-input span {
-  position: absolute;
-  top: 6px;
-  font-size: 1.3rem;
-  right: 10px;
-  color: rgb(161, 161, 161);
-  cursor: pointer;
 }
 </style>

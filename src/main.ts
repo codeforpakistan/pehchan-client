@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueTheMask from 'vue-the-mask';
 import 'buefy/dist/buefy.css';
+import Buefy from 'buefy';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +16,7 @@ library.add(faEyeSlash);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
+Vue.use(Buefy);
 
 Vue.use(VueTheMask);
 

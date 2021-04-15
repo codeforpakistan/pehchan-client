@@ -3,15 +3,22 @@
     <h1 class="mb2">Please confirm your phone.</h1>
     <p class="mb2">A verification code has been sent to your phone number. Enter it below to verify your contact information.</p>
     <div class="field">
-      <label class="label" for="phone-code">Phone Number Code (Sent to {{phone}})</label>
+      <label class="label" for="phone-code">Enter Code (Sent to {{phone}})</label>
       <div class="control">
-        <input class="input" name="phone-code" type="text" v-model="code" v-mask="'######'" placeholder="Phone Number Code">
+        <input class="input" name="phone-code" type="text" v-model="code" v-mask="'######'" placeholder="6 digit code">
       </div>
     </div>
+     <div class="field">
+      <label class="label text-link has-text-centered" for="phone-code">Did not receive the code? <span class="link">Resend</span></label>
+    </div>
     <div class="field">
-      <label class="label" for="password">New Password</label>
-      <div class="control">
-        <input class="input" name="password" type="password" v-model="password" placeholder="Your new password">
+      <label class="label mt2" for="password">New Password</label>
+      <div class="control password-input">
+        <input class="input" required name="password" :type="type" v-model="password" placeholder="Password">
+        <span @click="showPassword">
+          <font-awesome-icon v-if="type==='password'" :icon="['fas', 'eye']" />
+          <font-awesome-icon v-if="type==='text'" :icon="['fas', 'eye-slash']" />
+        </span>
       </div>
     </div>
     <div class="control">
@@ -38,10 +45,16 @@ export default class Login extends Vue {
 
   password = '';
 
+  type = 'password';
+
   code = null;
 
   mounted() {
     console.log('got phone', this.phone);
+  }
+
+  showPassword() {
+    this.type = this.type === 'password' ? 'text' : 'password';
   }
 
   async doSignup() {
