@@ -42,7 +42,7 @@ export default class Login extends Vue {
         nic: this.nic,
       };
       localStorage.setItem('user', JSON.stringify(user));
-      this.$router.push({ name: 'VerifyIdentity', query: { login_challenge: this.$route.query.login_challenge } });
+      this.$router.push({ name: 'EnterContact', query: { login_challenge: this.$route.query.login_challenge } });
     }
   }
 }
