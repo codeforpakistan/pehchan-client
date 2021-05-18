@@ -227,5 +227,8 @@ span.light-text {
     cursor: pointer;
     font-weight: 500;
   }
+  span.link:hover {
+    text-decoration: underline;
+  }
 }
 </style>
