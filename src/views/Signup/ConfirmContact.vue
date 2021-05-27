@@ -9,7 +9,7 @@
     <div class="field">
       <label class="label" for="phone-code">Enter Code (Sent to {{phone}})</label>
       <div class="control">
-        <input class="input" name="phone-code" type="text" v-model="code" v-mask="'######'" placeholder="6 digit code">
+        <input class="input" name="phone-code" type="text" v-model="code" v-mask="'#####'" placeholder="5 digit code">
       </div>
     </div>
      <div class="field">
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="control">
-      <button v-on:click="doSignup()" class="mt2 button is-primary is-fullwidth" :disabled="code == null || code.length < 6">
+      <button v-on:click="doSignup()" class="mt2 button is-primary is-fullwidth" :disabled="code == null || code.length < 5">
         Submit
       </button>
       <router-link class="mt2 mb1 button is-secondary is-fullwidth" to="/signup/enter-contact">
@@ -45,7 +45,7 @@ import emitter from '../../emitter';
 
 @Component
 export default class Login extends Vue {
-  phone = this.$route.query.phone;
+  phone: any = this.$route.query.phone;
 
   password = '';
 
@@ -64,9 +64,13 @@ export default class Login extends Vue {
   async doSignup() {
     const user = JSON.parse(localStorage.getItem('user') as string);
     try {
-      const response = await axios.post(`${process.env.VUE_APP_API_URL}/auth/verify-number`, { phone: this.phone, code: this.code });
+      const headers = {
+        'X-API-Key': '60acd9c1-034f-443a-ac6c-50fdaf3a9b7a',
+      };
+      const plainPhone = this.phone?.replace(/\D+/g, '');
+      const response = await axios.get(`${process.env.VUE_APP_API_URL}/auth/verify-number?recipient=${plainPhone}&code=${this.code}`, { headers });
       console.log('got verify-number response', response);
-      if (response.data?.success) {
+      if (response.data?.verify) {
         const name = `randomuser${Math.floor(Math.random() * 100)}`;
         const body = {
           nic: user.nic.replace(/-/g, ''),

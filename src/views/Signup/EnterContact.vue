@@ -34,10 +34,15 @@ export default class Login extends Vue {
   async submitContact(e: any) {
     e.preventDefault();
     console.log('submitting contact info', this.phone);
+    const headers = {
+      'X-API-Key': '60acd9c1-034f-443a-ac6c-50fdaf3a9b7a',
+    };
     try {
-      const response = await axios.post(`${process.env.VUE_APP_API_URL}/auth/send-verify-code`, { phone: this.phone });
+      const plainPhone = this.phone.replace(/\D+/g, '');
+      const response = await axios.get(`${process.env.VUE_APP_API_URL}/auth/send-verify-code?recipient=${plainPhone}`,
+        { headers });
       console.log('got send verify code response', response);
-      if (response.data?.success) {
+      if (response.data?.status === 'Success') {
         const user = JSON.parse(localStorage.getItem('user') as string);
         user.phone = this.phone;
         localStorage.setItem('user', JSON.stringify(user));
