@@ -7,7 +7,7 @@
     <div class="field">
       <label class="label" for="nic">CNIC <span class="light-text">(without dashes)</span> <span class="required-asterisk">*</span></label>
       <div class="control">
-        <input class="input" required name="nic" type="tel" v-model="nic" v-mask="'#####-#######-#'" placeholder="NIC">
+        <input class="input" required name="nic" type="tel" v-model="nic" v-mask="'#############'" placeholder="NIC">
       </div>
     </div>
     <div class="field">
@@ -57,9 +57,6 @@ export default class Login extends Vue {
   mounted() {
     this.challenge = (this.$route.query.login_challenge as string);
     console.log('got challenge', this.challenge);
-    if (!this.challenge) {
-      this.$router.push({ name: 'Home' });
-    }
   }
 
   showPassword() {

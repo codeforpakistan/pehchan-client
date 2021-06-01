@@ -7,7 +7,7 @@
       <div class="field">
         <label class="label" for="nic">CNIC <span class="light-text">(without dashes)</span> <span class="required-asterisk">*</span></label>
         <div class="control">
-          <input class="input" name="id-card-number" type="tel" required v-model="nic" v-mask="'#####-#######-#'" placeholder="ID Card Number">
+          <input class="input" name="id-card-number" type="tel" required v-model="nic" v-mask="'#############'" placeholder="ID Card Number">
         </div>
       </div>
       <b-field style="text-align:left;">
@@ -15,7 +15,7 @@
           I agree with Pehchaan <span v-on:click="openTC" class="link">Terms & Conditions</span>
         </b-checkbox>
       </b-field>
-      <button class="mt2 button is-primary is-fullwidth" type="submit">Submit</button>
+      <button class="mt2 button is-primary is-fullwidth" :disabled="nic.length !== 13" type="submit">Submit</button>
     </form>
     <div class="flex flex-center flex-column mt2 mb2">
       <h4 style="font-weight: 540;" class="mb0 mt1">Already have an account?</h4>
