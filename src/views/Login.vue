@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="field" style="text-align: left;">
-      <a class="forgot-pass">Forgot Password?</a>
+      <a class="forgot-pass" @click="forgotPassword">Forgot Password?</a>
     </div>
     <div v-if="error" class="field">
       <label style="color: red;">{{error}}</label>
@@ -61,6 +61,11 @@ export default class Login extends Vue {
 
   showPassword() {
     this.type = this.type === 'password' ? 'text' : 'password';
+  }
+
+  forgotPassword() {
+    localStorage.setItem('resetPassRedirect', window.location.href);
+    this.$router.push({ name: 'EnterCNIC', query: { resetPass: 'true' } });
   }
 
   async doLogin(e: any) {
