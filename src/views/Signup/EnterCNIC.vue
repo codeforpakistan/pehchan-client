@@ -22,7 +22,7 @@
         <span v-if="!resetPassFlow">Submit</span>
         <span v-if="resetPassFlow">Send Reset Code</span>
       </button>
-      <div v-if="errorMsg" class="field" style="text-align: center;">
+      <div v-if="errorMsg" class="field" style="text-align: center; margin-top: 10px;">
         <span style="color: red;">{{errorMsg}}</span>
       </div>
     </form>
@@ -60,12 +60,33 @@ export default class Login extends Vue {
     }
   }
 
+  async checkCNICExists() {
+    try {
+      const account: any = await axios.get(`${process.env.VUE_APP_PEHCHAN_API_URL}/users/nic/${this.nic}`);
+      if (account?.message === 'Request failed with status code 404') {
+        return false;
+      }
+      if (account && account?.data?.id) {
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error('err', err);
+      return false;
+    }
+  }
+
   async next(e: any) {
     this.errorMsg = '';
     e.preventDefault();
     if (this.resetPassFlow) {
       this.sendResetCode();
     } else if (this.agreeTC) {
+      const alreadyExists = await this.checkCNICExists();
+      if (alreadyExists) {
+        this.errorMsg = 'An account is already registered with this CNIC.';
+        return;
+      }
       const user = {
         nic: this.nic,
       };
