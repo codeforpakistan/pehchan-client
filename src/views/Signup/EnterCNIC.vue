@@ -15,7 +15,7 @@
       </div>
       <b-field style="text-align:left;" v-if="!resetPassFlow">
         <b-checkbox class="text-link" required v-model="agreeTC" type="is-primary">
-          I agree with Pehchaan <span v-on:click="openTC" class="link">Terms & Conditions</span>
+          I have read and agree to Pehchaan <span v-on:click="openTC" class="link"><br />Terms & Conditions</span>
         </b-checkbox>
       </b-field>
       <button class="mt2 button is-primary is-fullwidth" :disabled="nic.length !== 13" type="submit">
